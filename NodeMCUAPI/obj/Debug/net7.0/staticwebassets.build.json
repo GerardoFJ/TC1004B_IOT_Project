@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "zOly60UdvokaI7q5yuBVT0pAPn8AunW71iuLYKjhCWI=",
+  "Source": "NodeMCUAPI",
+  "BasePath": "_content/NodeMCUAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
