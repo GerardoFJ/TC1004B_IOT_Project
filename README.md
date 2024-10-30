@@ -21,6 +21,9 @@ chmod +x container.sh
 ### To remove the container
 ` ./container.sh clean `
 
+### To set ip
+  `./container set-ip YOUR-IP`
+
 
 #### Setup Mysql
 ```
@@ -99,4 +102,4 @@ DELIMITER ;
 
 #### Notes
 Link to the FASTAPI:
-http://localhost:5195/swagger/index.html
+http://YOUR_IP:5195/swagger/index.html
