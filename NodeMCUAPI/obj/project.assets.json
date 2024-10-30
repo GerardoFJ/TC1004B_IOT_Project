@@ -2244,24 +2244,26 @@
     ]
   },
   "packageFolders": {
-    "/home/ubuntu/.nuget/packages/": {}
+    "/Users/claudiasolis/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/workspace/NodeMCUAPI/NodeMCUAPI/NodeMCUAPI.csproj",
+      "projectUniqueName": "/Users/claudiasolis/Documents/ITESM/Semestre Febrero-Junio 2024/TC1004B - Implementación de IoT/API/NodeMCUAPI/NodeMCUAPI/NodeMCUAPI.csproj",
       "projectName": "NodeMCUAPI",
-      "projectPath": "/workspace/NodeMCUAPI/NodeMCUAPI/NodeMCUAPI.csproj",
-      "packagesPath": "/home/ubuntu/.nuget/packages/",
-      "outputPath": "/workspace/NodeMCUAPI/NodeMCUAPI/obj/",
+      "projectPath": "/Users/claudiasolis/Documents/ITESM/Semestre Febrero-Junio 2024/TC1004B - Implementación de IoT/API/NodeMCUAPI/NodeMCUAPI/NodeMCUAPI.csproj",
+      "packagesPath": "/Users/claudiasolis/.nuget/packages/",
+      "outputPath": "/Users/claudiasolis/Documents/ITESM/Semestre Febrero-Junio 2024/TC1004B - Implementación de IoT/API/NodeMCUAPI/NodeMCUAPI/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/ubuntu/.nuget/NuGet/NuGet.Config"
+        "/Users/claudiasolis/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
+        "/usr/local/share/dotnet/library-packs": {},
+        "/usr/local/share/dotnet/sdk/7.0.314/Sdks/Microsoft.NET.Sdk.Web/library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -2312,7 +2314,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/home/ubuntu/dotnet/sdk/7.0.400/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.314/RuntimeIdentifierGraph.json"
       }
     }
   }

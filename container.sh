@@ -18,6 +18,13 @@ elif [ "$1" == "create" ]; then
 elif [ "$1" == "clean" ]; then
     docker stop iot
     docker rm iot
+elif [ "$1" == "set-ip" ]; then
+    if [ -z "$2" ]; then
+        echo "Please provide the IP address as the second argument."
+        exit 1
+    fi
+    sed -i "7s|.*|\"applicationUrl\": \"http://$2:46555\",|" NodeMCUAPI/Properties/launchSettings.json
+    sed -i "16s|.*|\"applicationUrl\": \"http://$2:5195\",|" NodeMCUAPI/Properties/launchSettings.json
 else
     echo "Invalid option. Please use start, stop, build or create"
 fi

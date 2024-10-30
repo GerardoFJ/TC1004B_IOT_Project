@@ -13,7 +13,7 @@ namespace NodeMCUAPI.Controllers
     [Route("[controller]")]
     public class DeviceController : Controller
     {
-private string connectionString = "Server=127.0.0.1;Port=3306;Database=nodedb;Uid=root;password=";
+        private string connectionString = "Server=127.0.0.1;Port=3306;Database=nodedb;Uid=root;password=####";
 
         // GET Function
         [HttpGet]
