@@ -19,9 +19,11 @@ WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP, "2.mx.pool.ntp.org", -21600, 60000);
 
 
-const char* ssid = "RoBorregos2";
-const char* password = "RoBorregos2024";
+// const char* ssid = "RoBorregos2";
+// const char* password = "RoBorregos2024";
 
+const char* ssid = "Tec-IoT";
+const char* password = "spotless.magnetic.bridge";
 
 
 HTTPClient httpClient;
@@ -32,8 +34,10 @@ WiFiClientSecure httpsClient;
 const char *host = "fast-api-reto.onrender.com";
 const int httpsPort = 443;  //HTTPS= 443 and HTTP = 80
 const String Link = "/add-log-sensor";
+const String Actuator_link = "/add-log-actuator";
 
 String device = "16";
+String actuator = "10";
 
 #define LED_1 13
 #define LED_2 15
@@ -78,7 +82,7 @@ void start_ota_update(){
 }
 
 
-void logAttempt(int data){
+void logAttempt(int data, bool actuator_s = false){
   if(WiFi.status() == WL_CONNECTED){
     String formattedDate = timeClient.getFormattedDate();
 
@@ -88,7 +92,13 @@ void logAttempt(int data){
     Serial.println(timeStamp);
     String date_up = "\""+dayStamp+" "+timeStamp+"\"";
     Serial.println(date_up);
-    String msg= "{\"date_\": "+date_up+",\"sensor_id\":"+device+",\"measure\":"+String(data)+"}";
+    String msg;
+    if(actuator_s){
+      msg= "{\"date_a\": "+date_up+",\"actuator_id\":"+actuator+",\"active\":"+String(data)+"}";
+    }
+      else{
+        msg= "{\"date_\": "+date_up+",\"sensor_id\":"+device+",\"measure\":"+String(data)+"}";
+      }
 
     httpsClient.setInsecure();
     httpsClient.setTimeout(10000);
@@ -100,6 +110,17 @@ void logAttempt(int data){
       r++;
   }
 
+  if(actuator_s){
+httpsClient.print(String("POST ") + Actuator_link + " HTTP/1.1\r\n" +
+               "Host: " + host + "\r\n" +
+               "Content-Type: application/json"+ "\r\n" +
+               "Content-Length:" + msg.length() + "\r\n\r\n" +
+               msg + "\r\n" +
+               "Connection: close\r\n\r\n");
+  }
+  else{
+    
+  }
   httpsClient.print(String("POST ") + Link + " HTTP/1.1\r\n" +
                "Host: " + host + "\r\n" +
                "Content-Type: application/json"+ "\r\n" +
@@ -144,6 +165,7 @@ int dato = analogRead(A0);
 Serial.println(dato);
 if(prev_dato - dato > 1 || prev_dato - dato < -1){
   Serial.println("Dato cambiado");
+  logAttempt(1, true);
   digitalWrite(LED_1, HIGH);
   digitalWrite(LED_2, LOW);
   delay(500);

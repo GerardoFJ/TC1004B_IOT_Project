@@ -8,6 +8,11 @@
 #include <ArduinoOTA.h>
 #include <ESP8266WebServer.h>
 
+// lcd 3
+// buzzer 11
+// servo 4
+// vibration 9 
+//led 10
 
 #define IR 5 // D6
 #define Motor 4 // D7
@@ -17,10 +22,11 @@ WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP, "2.mx.pool.ntp.org", -21600, 60000);
 
 
-const char* ssid = "RoBorregos2";
-const char* password = "RoBorregos2024";
+// const char* ssid = "RoBorregos2";
+// const char* password = "RoBorregos2024";
 
-
+const char* ssid = "Tec-IoT";
+const char* password = "spotless.magnetic.bridge";
 
 HTTPClient httpClient;
 WiFiClient wClient;
@@ -33,7 +39,7 @@ const String Link = "/add-log-sensor";
 const String Actuator_link = "/add-log-actuator";
 
 String device = "10";
-String actuator = "13";
+String actuator = "9";
 
 void start_ota_update(){
   ArduinoOTA.setHostname("esp_IR");
@@ -159,7 +165,7 @@ void loop(){
         digitalWrite(Motor, LOW);
         Serial.println("Movement Detected");
         move_state = 1;
-        //logAttempt(1, true);
+        logAttempt(1, true);
     }else{
         digitalWrite(Motor, HIGH);
     }
