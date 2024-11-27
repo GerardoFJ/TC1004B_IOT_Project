@@ -6,21 +6,32 @@
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include <ArduinoOTA.h>
+#include <WiFiClientSecure.h> 
+#include <ESP8266WebServer.h>
 
 #define TRIG_PIN 12 // GPIO6
 #define ECHO_PIN 13 // GPIO7
 LiquidCrystal_I2C lcd(0x27, 16, 2); // Address 0x27, 16 columns, 2 rows
 
 WiFiUDP ntpUDP;
-NTPClient timeClient(ntpUDP);
+NTPClient timeClient(ntpUDP, "2.mx.pool.ntp.org", -21600, 60000);
+
+
 const char* ssid = "RoBorregos2";
 const char* password = "RoBorregos2024";
+
+
+
 HTTPClient httpClient;
 WiFiClient wClient;
-String URL = "http://fast-api-reto.onrender.com/add-log-sensor";
+WiFiClientSecure httpsClient;
+
+
+const char *host = "fast-api-reto.onrender.com";
+const int httpsPort = 443;  //HTTPS= 443 and HTTP = 80
+const String Link = "/add-log-sensor";
+
 String device = "6";
-
-
 
 void start_ota_update(){
   ArduinoOTA.setHostname("esp_lcdultra");
@@ -73,19 +84,26 @@ void logAttempt(int data){
     Serial.println(timeStamp);
     String date_up = "\""+dayStamp+" "+timeStamp+"\"";
     Serial.println(date_up);
-    postData= "{\"date_\": "+date_up+",\"sensor_id\":"+device+",\"measure\":"+datas+"}";
-    Serial.print("Post Data String: ");
-    Serial.println(postData);
-    Serial.print("Host: ");
-    Serial.println(URL);
-    httpClient.begin(wClient, URL);
-    httpClient.addHeader("Content-Type", "application/json");
-    int httpCode = httpClient.POST(postData);
-    Serial.print("Response Code: ");
-    Serial.println(httpCode);
- 
-    httpClient.end();
+    String msg= "{\"date_\": "+date_up+",\"sensor_id\":"+device+",\"measure\":"+datas+"}";
+    
+    httpsClient.setInsecure();
+    httpsClient.setTimeout(10000);
+
+    int r=0; //retry counter
+    while((!httpsClient.connect(host, httpsPort)) && (r < 30)){
+      delay(100);
+      Serial.print(".");
+      r++;
   }
+
+  httpsClient.print(String("POST ") + Link + " HTTP/1.1\r\n" +
+               "Host: " + host + "\r\n" +
+               "Content-Type: application/json"+ "\r\n" +
+               "Content-Length:" + msg.length() + "\r\n\r\n" +
+               msg + "\r\n" +
+               "Connection: close\r\n\r\n");
+  }
+  Serial.println("Message sent");
   return;
 }
 

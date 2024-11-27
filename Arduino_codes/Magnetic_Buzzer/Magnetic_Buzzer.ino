@@ -13,11 +13,9 @@
 #define MAG 12 // D6
 #define BUZZER 13 // D7
 
-///Certificate	3560b24af863c672601dc22bbdbf6fefd3ec508c72438ac03d938184357f2be9
-//Public Key	2204991132aadfdbd5323c2a378e09f7f5012f815214b81f0a3bc8dc9694ca83
 
 WiFiUDP ntpUDP;
-NTPClient timeClient(ntpUDP);
+NTPClient timeClient(ntpUDP, "2.mx.pool.ntp.org", -21600, 60000);
 
 
 const char* ssid = "RoBorregos2";
@@ -76,6 +74,7 @@ void start_ota_update(){
 void logAttempt(int data){
   if(WiFi.status() == WL_CONNECTED){
     String formattedDate = timeClient.getFormattedDate();
+
     int splitT = formattedDate.indexOf("T");
     String dayStamp = formattedDate.substring(0, splitT);
     String timeStamp = formattedDate.substring(splitT+1, formattedDate.length()-1);
