@@ -7,11 +7,11 @@
 #define DHTTYPE   DHT11
 DHT dht(DHTPIN, DHTTYPE);
 float t = 0;
-const char* ssid = "Pruebaesp";
-const char* password = "Gerardo02?";
+const char* ssid = "Tec-IoT";
+const char* password = "spotless.magnetic.bridge";
 HTTPClient httpClient;
 WiFiClient wClient;
-String URL = "http://192.168.162.147:5195/Temperature";
+String URL = "http://fast-api-reto.onrender.com/Temperature";
 
 void setup() {
   Serial.begin(9600); // Initialize connection
