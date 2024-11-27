@@ -8,6 +8,11 @@
 #include <ArduinoOTA.h>
 #include <ESP8266WebServer.h>
 
+//lcd 10 
+//vibration 11
+//led 12
+//servo 13
+//buzzer 14
 
 
 WiFiUDP ntpUDP;
@@ -128,14 +133,16 @@ start_ota_update();
   Serial.println(WiFi.localIP());
   timeClient.begin();
   delay(500);
-  prev_dato= map(analogRead(A0), 500, 650, 0,100);
+  prev_dato= analogRead(A0);
 }
 void loop(){
 ArduinoOTA.handle();
 timeClient.update();
-int dato = map(analogRead(A0), 500, 650, 0,100);
+// int dato = map(analogRead(A0), 500, 650, 0,100);
+delay(1000);
+int dato = analogRead(A0);
 Serial.println(dato);
-if(prev_dato - dato > 5 || prev_dato - dato < -5){
+if(prev_dato - dato > 1 || prev_dato - dato < -1){
   Serial.println("Dato cambiado");
   digitalWrite(LED_1, HIGH);
   digitalWrite(LED_2, LOW);
@@ -151,11 +158,10 @@ if(prev_dato - dato > 5 || prev_dato - dato < -5){
   delay(500);
   digitalWrite(LED_1, LOW);
   digitalWrite(LED_2, LOW);
+
 }
-prev_dato =dato;
+prev_dato = dato;
 logAttempt(dato);
-ArduinoOTA.handle();
-delay(1000);
 ArduinoOTA.handle();
 }
 

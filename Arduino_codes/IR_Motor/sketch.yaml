@@ -1,2 +1,2 @@
 default_fqbn: esp8266:esp8266:generic
-default_port: /dev/ttyUSB0
+default_port: 192.168.1.104
